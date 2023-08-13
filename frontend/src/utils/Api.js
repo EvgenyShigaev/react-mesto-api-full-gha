@@ -29,7 +29,6 @@ class Api {
 
   getUserData() {
     return fetch(`${this._url}/users/me`, {
-    
       headers: this._setHeaders(),
     }).then(this._getJson);
   }
@@ -97,10 +96,9 @@ class Api {
 }
 
 export const api = new Api({
-  url: "https://mesto.nomoreparties.co/v1/cohort-65",
+  url: "http://api.mesto-frontend.nomoreparties.co",
   headers: { 
     Accept: "application/json", 
     "Content-type": "application/json", 
   }, 
-
 });
