@@ -59,10 +59,10 @@ function App() {
     auth
       .register(email, password)
       .then((res) => {
-        if (res) {
+        console.log(res);
           setIsSuccess(true);
           navigate("/sign-in", { replace: true });
-        }
+        
       })
       .catch((err) => {
         setIsSuccess(false);
@@ -76,6 +76,7 @@ function App() {
       .login(email, password)
       .then((data) => {
         if (data.token) {
+          console.log(data)
           localStorage.setItem("token", data.token);
           setLoggedIn(true);
           setEmail(email);
@@ -84,6 +85,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+        setIsSuccess(false)
         setIsInfoTooltip(true);
       });
   }
