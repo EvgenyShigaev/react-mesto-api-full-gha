@@ -19,7 +19,7 @@ class Api {
       ...this._headers, 
     }; 
   } 
-
+// ----
   getInitialCards() {
     return fetch(`${this._url}/cards`, {
       // method: "GET",
@@ -32,7 +32,7 @@ class Api {
       headers: this._setHeaders(),
     }).then(this._getJson);
   }
-
+// ---
   editUserInfo(data) {
     return fetch(`${this._url}/users/me`, {
       method: "PATCH",

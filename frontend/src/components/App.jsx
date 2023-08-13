@@ -39,10 +39,10 @@ function App() {
       if (jwt) {
         auth
           .checkToken(jwt)
-          .then((user) => {
-            if (user) {
+          .then((res) => {
+            if (res.data) {
               setLoggedIn(true);
-              setEmail(user.data.email);
+              setEmail(res.data.email);
               navigate("/", { replace: true });
             }
           })
@@ -51,14 +51,15 @@ function App() {
     }
 
     checkToken();
-  }, [navigate]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // регистрация
   function handleRegister({ email, password }) {
     auth
       .register(email, password)
-      .then((data) => {
-        if (data) {
+      .then((res) => {
+        if (res) {
           setIsSuccess(true);
           navigate("/sign-in", { replace: true });
         }
@@ -73,9 +74,9 @@ function App() {
   function handleLogin({ email, password }) {
     auth
       .login(email, password)
-      .then((user) => {
-        if (user.token) {
-          localStorage.setItem("token", user.token);
+      .then((data) => {
+        if (data.token) {
+          localStorage.setItem("token", data.token);
           setLoggedIn(true);
           setEmail(email);
           navigate("/", { replace: true });
@@ -94,13 +95,37 @@ function App() {
   }
 
   useEffect(() => {
-    Promise.all([api.getInitialCards(), api.getUserData()])
-      .then(([initialCards, user]) => {
-        setCards(initialCards);
-        setCurrentUser(user);
+    if (loggedIn) {
+      api.getInitialCards()
+      .then((data) => {
+        setCards(data());
       })
-      .catch((err) => alert(err));
-  }, []);
+      .catch((err) => { 
+        console.log(err); 
+      }); 
+  } 
+}, [loggedIn]);
+
+useEffect(() => {
+  if (loggedIn) {
+    api.getUserData()
+    .then((res) => {
+      setCurrentUser(res.data);
+    })
+    .catch((err) => { 
+      console.log(err); 
+    }); 
+} 
+}, [loggedIn]); 
+
+  // useEffect(() => {
+  //   Promise.all([api.getInitialCards(), api.getUserData()])
+  //     .then(([initialCards, user]) => {
+  //       setCards(initialCards);
+  //       setCurrentUser(user);
+  //     })
+  //     .catch((err) => alert(err));
+  // }, []);
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
