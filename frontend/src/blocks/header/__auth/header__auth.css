@@ -1,0 +1,25 @@
+.header__auth { 
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  text-align: right;
+  text-decoration: none;
+  font-family: Inter;
+  font-size: 18px; 
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0em;
+  transition: .8s;
+  gap: 24px;
+} 
+ 
+.header__auth:hover { 
+  opacity: .6;
+} 
+ 
+@media screen and (max-width:665px) { 
+  .header__auth { 
+    font-size: 14px;
+    line-height: 17px;
+  } 
+} 

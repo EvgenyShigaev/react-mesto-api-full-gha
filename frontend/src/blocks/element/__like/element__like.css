@@ -1,0 +1,24 @@
+.element__like {
+  background-image: url(../../../images/like.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #fff;
+  object-fit: contain;
+  border: none;
+  width: 22px;
+  height: 19px;
+  cursor: pointer;
+  padding: 0 25px 0 0;
+  margin-bottom: 3px;
+  transition: .5s linear;
+}
+
+.element__like:hover {
+  opacity: .5;
+}
+
+@media screen and (max-width: 350px) {
+  .element__like {
+    padding-right: 34px;
+  }
+}

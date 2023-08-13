@@ -1,0 +1,14 @@
+.auth__signin-title { 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding-bottom: 80px;
+  gap: 5px;
+  font-size: 14px;
+  transition: .8s;
+}
+ 
+.auth__signin-title:hover { 
+  opacity: .6; 
+}

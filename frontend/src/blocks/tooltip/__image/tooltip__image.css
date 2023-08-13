@@ -1,0 +1,10 @@
+.tooltip__image {
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-content: space-around; 
+  flex-wrap: wrap; 
+  width: 120px; 
+  height: 120px; 
+  padding-top: 28px; 
+}
