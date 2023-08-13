@@ -9,7 +9,7 @@ const Forbidden = require('../errors/Forbidden');
 // getCards - для получения всех карточек
 const getCards = (req, res, next) => {
   Card.find({})
-    .populate('owner')
+    .populate(['owner', 'likes'])
     .then((card) => res.status(200).send({ data: card }))
     .catch((err) => {
       next(err);
@@ -21,7 +21,13 @@ const createCard = (req, res, next) => {
   const { name, link } = req.body;
 
   Card.create({ name, link, owner: req.user._id })
-    .then((card) => res.status(201).send({ data: card }))
+    .then((card) => {
+      card
+        .populate('owner')
+        .then(() => {
+          res.status(201).send(card);
+        });
+    })
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
         next(new BadRequest('Некорректный запрос'));
@@ -93,12 +99,12 @@ const dislikeCard = (req, res, next) => {
     { $pull: { likes: userId } },
     { new: true },
   )
-    .then((card) => {
-      if (!card) {
-        throw new NotFoundError('Карточка не найдена');
-      }
-      res.send(card);
+    .populate(['owner', 'likes'])
+    .orFail(() => {
+      throw new NotFoundError('Card not found');
     })
+
+    .then((card) => res.status(200).send(card))
     .catch((err) => {
       if (err.name === 'CastError' || err.name === 'BadRequest') {
         next(new BadRequest('Некорректный запрос'));

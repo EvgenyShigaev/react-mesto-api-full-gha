@@ -43,12 +43,12 @@ const createUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
-        return next(new BadRequest('Некорректный запрос'));
+        next(new BadRequest('Некорректный запрос'));
+      } else if (err.name === 'MongoServerError' && err.code === 11000) {
+        next(new Conflict('Произошел конфликт запроса и данных на сервере'));
+      } else {
+        next(err);
       }
-      if (err.name === 'MongoServerError' && err.code === 11000) {
-        return next(new Conflict('Произошел конфликт запроса и данных на сервере'));
-      }
-      return next(err);
     });
 };
 
@@ -59,6 +59,7 @@ const login = (req, res, next) => {
   return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key', { expiresIn: '7d' });
+
       res.status(200).send({ token });
     })
     .catch(next);
