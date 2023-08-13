@@ -51,7 +51,6 @@ const createUser = (req, res, next) => {
       }
     });
 };
-
 // Аутентификация пользователя: login
 const login = (req, res, next) => {
   const { email, password } = req.body;
