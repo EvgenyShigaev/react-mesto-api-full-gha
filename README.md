@@ -11,6 +11,6 @@
 
 IP 158.160.109.65
 
-Frontend https://...
+Frontend https://mesto-frontend.nomoreparties.co
 
-Backend https://...
+Backend https://api.mesto-frontend.nomoreparties.co

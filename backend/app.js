@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const router = require('./routes');
+const cors = require('./middlewares/cors');
 const limiter = require('./middlewares/rateLimit');
 const error500 = require('./middlewares/error500');
 
@@ -14,6 +15,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
   useNewUrlParser: true,
 });
 const app = express();
+app.use(cors);
 app.use(requestLogger);
 app.use(helmet());
 app.use(limiter);

@@ -96,7 +96,7 @@ class Api {
 }
 
 export const api = new Api({
-  url: "http://api.mesto-frontend.nomoreparties.co",
+  url: "https://api.mesto-frontend.nomoreparties.co",
   headers: { 
     Accept: "application/json", 
     "Content-type": "application/json", 
