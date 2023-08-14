@@ -101,11 +101,11 @@ useEffect(() => {
   function handleLogin({ email, password }) {
     auth
       .login(email, password)
-      .then((data) => {
-        if (data) {
-          console.log(data)
+      .then((res) => {
+        if (res) {
+          console.log(res)
           setEmail(email);
-          localStorage.setItem("token", data);
+          localStorage.setItem("token", res);
           setLoggedIn(true);
           
           navigate("/", { replace: true });
