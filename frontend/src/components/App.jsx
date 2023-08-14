@@ -77,23 +77,25 @@ function App() {
       .then((data) => {
         if (data.token) {
           console.log(data)
+          setEmail(email);
           localStorage.setItem("token", data.token);
           setLoggedIn(true);
-          setEmail(email);
+          
           navigate("/", { replace: true });
         }
       })
       .catch((err) => {
-        console.log(err);
         setIsSuccess(false)
         setIsInfoTooltip(true);
+        console.log(err);
       });
   }
   // выход
   function handleLogout() {
     setLoggedIn(false);
+    setEmail("");
     localStorage.removeItem("token");
-    navigate("/sign-in");
+    navigate("/sign-in", { replace: true });
   }
 
   useEffect(() => {

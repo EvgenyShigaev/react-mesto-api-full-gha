@@ -1,6 +1,6 @@
 export const BASE_URL = "https://api.mesto-frontend.nomoreparties.co";
 
-export const getJson = (res) => {
+export const handleResponse = (res) => {
   if (res.ok) {
     return res.json();
   }
@@ -15,8 +15,10 @@ export const register = (email, password) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
-  }).then((res) => getJson(res));
-};
+  }).then((res) => { 
+    return handleResponse(res); 
+  }); 
+}; 
 
 export const login = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
@@ -26,8 +28,11 @@ export const login = (email, password) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
-  }).then(getJson);
-};
+  }).then((res) => { 
+    return handleResponse(res); 
+  }); 
+}; 
+
 
 export const checkToken = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
@@ -37,7 +42,7 @@ export const checkToken = (token) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-  })
-    .then((res) => getJson(res))
-    .then((data) => data);
+  }).then((res) => { 
+    return handleResponse(res); 
+  }); 
 }; 
