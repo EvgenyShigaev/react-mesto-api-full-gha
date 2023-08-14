@@ -33,6 +33,30 @@ function App() {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
 
+  // пользователь, карточки, токен, логин и рег
+  useEffect(() => {
+    if (loggedIn) {
+      api.getInitialCards()
+      .then((data) => {
+        setCards(data());
+      })
+      .catch((err) => { 
+        console.log(`Ошибка: ${err.status}`); 
+      }); 
+  } 
+}, [loggedIn]);
+
+useEffect(() => {
+  if (loggedIn) {
+    api.getUserData()
+    .then((res) => {
+      setCurrentUser(res.data);
+    })
+    .catch((err) => { 
+      console.log(`Ошибка: ${err.status}`); 
+    }); 
+} 
+}, [loggedIn]); 
 
     function checkToken() {
       const token = localStorage.getItem("token");
@@ -78,10 +102,10 @@ function App() {
     auth
       .login(email, password)
       .then((data) => {
-        if (data) {
+        if (data.token) {
           console.log(data)
           setEmail(email);
-          localStorage.setItem("token", data);
+          localStorage.setItem("token", data.token);
           setLoggedIn(true);
           
           navigate("/", { replace: true });
@@ -95,35 +119,13 @@ function App() {
   }
   // выход
   function handleLogout() {
+    localStorage.removeItem("token");
     setLoggedIn(false);
     setEmail("");
-    localStorage.removeItem("token");
     navigate("/sign-in", { replace: true });
   }
 
-  useEffect(() => {
-    if (loggedIn) {
-      api.getInitialCards()
-      .then((data) => {
-        setCards(data());
-      })
-      .catch((err) => { 
-        console.log(`Ошибка: ${err.status}`); 
-      }); 
-  } 
-}, [loggedIn]);
 
-useEffect(() => {
-  if (loggedIn) {
-    api.getUserData()
-    .then((res) => {
-      setCurrentUser(res.data);
-    })
-    .catch((err) => { 
-      console.log(`Ошибка: ${err.status}`); 
-    }); 
-} 
-}, [loggedIn]); 
 
   // useEffect(() => {
   //   Promise.all([api.getInitialCards(), api.getUserData()])
