@@ -33,12 +33,12 @@ function App() {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
+
     function checkToken() {
-      const jwt = localStorage.getItem("token");
-      if (jwt) {
+      const token = localStorage.getItem("token");
+      if (token) {
         auth
-          .checkToken(jwt)
+          .checkToken(token)
           .then((res) => {
             if (res.data) {
               setLoggedIn(true);
@@ -46,13 +46,16 @@ function App() {
               navigate("/", { replace: true });
             }
           })
-          .catch((err) => console.log(err));
-      }
+          .catch((err) => { 
+            console.log(`Ошибка: ${err.status}`); 
+          }); 
+      } 
     }
 
-    checkToken();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    useEffect(() => { 
+      checkToken();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
   // регистрация
   function handleRegister({ email, password }) {
@@ -66,7 +69,7 @@ function App() {
       })
       .catch((err) => {
         setIsSuccess(false);
-        console.log(err);
+        console.log(`Ошибка: ${err}`);
       })
       .finally(() => setIsInfoTooltip(true));
   }
@@ -75,10 +78,10 @@ function App() {
     auth
       .login(email, password)
       .then((data) => {
-        if (data.token) {
+        if (data) {
           console.log(data)
           setEmail(email);
-          localStorage.setItem("token", data.token);
+          localStorage.setItem("token", data);
           setLoggedIn(true);
           
           navigate("/", { replace: true });
@@ -87,7 +90,7 @@ function App() {
       .catch((err) => {
         setIsSuccess(false)
         setIsInfoTooltip(true);
-        console.log(err);
+        console.log(`Ошибка: ${err}`);
       });
   }
   // выход
@@ -105,7 +108,7 @@ function App() {
         setCards(data());
       })
       .catch((err) => { 
-        console.log(err); 
+        console.log(`Ошибка: ${err.status}`); 
       }); 
   } 
 }, [loggedIn]);
@@ -117,7 +120,7 @@ useEffect(() => {
       setCurrentUser(res.data);
     })
     .catch((err) => { 
-      console.log(err); 
+      console.log(`Ошибка: ${err.status}`); 
     }); 
 } 
 }, [loggedIn]); 
