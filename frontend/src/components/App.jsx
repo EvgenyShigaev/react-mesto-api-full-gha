@@ -102,10 +102,10 @@ useEffect(() => {
     auth
       .login(email, password)
       .then((data) => {
-        if (data.token) {
+        if (data) {
           console.log(data)
           setEmail(email);
-          localStorage.setItem("token", data.token);
+          localStorage.setItem("token", data);
           setLoggedIn(true);
           
           navigate("/", { replace: true });
