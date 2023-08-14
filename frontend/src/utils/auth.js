@@ -1,11 +1,11 @@
 export const BASE_URL = "https://api.mesto-frontend.nomoreparties.co";
 
-export const getJson = (res) => {
-  if (res.ok) {
-    return res.json();
-  } else {
-  return Promise.reject(`Ошибка: ${res.status}`);
-}
+function handleResponse(res) { 
+  if (res.ok) { 
+    return res.json(); 
+  } else { 
+    return Promise.reject(`Ошибка: ${res.status}`); 
+  } 
 }
 
 export const register = (email, password) => {
@@ -17,7 +17,7 @@ export const register = (email, password) => {
     },
     body: JSON.stringify({ email, password }),
   }).then((res) => { 
-    return getJson(res); 
+    return handleResponse(res); 
   }); 
 }; 
 
@@ -30,7 +30,7 @@ export const login = (email, password) => {
     },
     body: JSON.stringify({ email, password }),
   }).then((res) => { 
-    return getJson(res); 
+    return handleResponse(res); 
   }); 
 }; 
 
@@ -44,6 +44,6 @@ export const checkToken = (token) => {
     },
   })
   .then((res) => { 
-    return getJson(res); 
+    return handleResponse(res); 
   }); 
 };
