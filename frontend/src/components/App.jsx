@@ -103,9 +103,9 @@ useEffect(() => {
       .login(email, password)
       .then((res) => {
         if (res) {
-          console.log(res)
+          console.log(res.token)
           setEmail(email);
-          localStorage.setItem("token", res);
+          localStorage.setItem("token", res.token);
           setLoggedIn(true);
           
           navigate("/", { replace: true });
