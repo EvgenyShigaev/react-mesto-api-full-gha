@@ -1,4 +1,4 @@
-export const {BASE_URL} = "https://api.mesto-frontend.nomoreparties.co";
+export const BASE_URL = "https://api.mesto-frontend.nomoreparties.co";
 
 function handleResponse(res) { 
   if (res.ok) { 
