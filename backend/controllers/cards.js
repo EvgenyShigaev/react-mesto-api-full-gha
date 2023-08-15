@@ -10,7 +10,7 @@ const Forbidden = require('../errors/Forbidden');
 const getCards = (req, res, next) => {
   Card.find({})
     .populate(['owner', 'likes'])
-    .then((card) => res.status(200).send(card))
+    .then((card) => res.status(200).send({ data: card }))
     .catch((err) => {
       next(err);
     });
@@ -78,7 +78,9 @@ const likeCard = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError('Карточка не найдена');
     })
-    .then((card) => res.status(200).send(card))
+    .then((card) => {
+      res.status(200).send({ data: card, message: 'Запрос выполнен' });
+    })
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new BadRequest('Некорректный запрос'));
