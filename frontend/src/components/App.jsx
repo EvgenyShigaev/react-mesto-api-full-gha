@@ -93,6 +93,7 @@ function App() {
       checkToken();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+    
  
   // регистрация 
   function handleRegister({ email, password }) { 
