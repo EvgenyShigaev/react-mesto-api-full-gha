@@ -43,6 +43,7 @@ function App() {
   // }, []);
 
 
+
   useEffect(() => { 
     if (loggedIn) { 
       api 
@@ -70,43 +71,28 @@ function App() {
     } 
   }, [loggedIn]);
 
-  function checkToken() { 
-    const token = localStorage.getItem("token"); 
-    if (token) { 
-      auth 
-        .checkToken(token) 
-        .then((user) => { 
-          if (user) { 
-            setLoggedIn(true); 
-            setEmail(user.data.email); 
-            navigate("/", { replace: true }); 
-          } 
-        }) 
-        .catch((err) => console.log(err)); 
-    } 
-  } 
-
-  checkToken();
   
-  // useEffect(() => { 
-  //   function checkToken() { 
-  //     const token = localStorage.getItem("token"); 
-  //     if (token) { 
-  //       auth 
-  //         .checkToken(token) 
-  //         .then((user) => { 
-  //           if (user) { 
-  //             setLoggedIn(true); 
-  //             setEmail(user.data.email); 
-  //             navigate("/", { replace: true }); 
-  //           } 
-  //         }) 
-  //         .catch((err) => console.log(err)); 
-  //     } 
-  //   } 
+  
+    function checkToken() { 
+      const jwt = localStorage.getItem("token"); 
+      if (jwt) { 
+        auth 
+          .checkToken(jwt) 
+          .then((user) => { 
+            if (user) { 
+              setLoggedIn(true); 
+              setEmail(user.data.email); 
+              navigate("/", { replace: true }); 
+            } 
+          }) 
+          .catch((err) => console.log(err)); 
+      } 
+    } 
  
-  //   checkToken(); 
-  // }, [navigate]); 
+    useEffect(() => { 
+      checkToken();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
  
   // регистрация 
   function handleRegister({ email, password }) { 
