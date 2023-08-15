@@ -33,43 +33,43 @@ function App() {
   const [email, setEmail] = useState(""); 
   const navigate = useNavigate(); 
  
+  useEffect(() => { 
+    Promise.all([api.getInitialCards(), api.getUserData()]) 
+      .then(([initialCards, user]) => { 
+        setCards(initialCards); 
+        setCurrentUser(user); 
+      }) 
+      .catch((err) => alert(err)); 
+  }, []);
+
+
+
   // useEffect(() => { 
-  //   Promise.all([api.getInitialCards(), api.getUserData()]) 
-  //     .then(([initialCards, user]) => { 
-  //       setCards(initialCards); 
-  //       setCurrentUser(user); 
-  //     }) 
-  //     .catch((err) => alert(err)); 
-  // }, []);
-
-
-
-  useEffect(() => { 
-    if (loggedIn) { 
-      api 
-        .getDataUser() 
-        .then((user) => { 
-          setCurrentUser(user.data); 
-        }) 
-        .catch((err) => { 
-          console.log(`Ошибка в App, getDataUser: ${err.status}`); 
-        }); 
-    } 
-  }, [loggedIn]); 
+  //   if (loggedIn) { 
+  //     api 
+  //       .getDataUser() 
+  //       .then((user) => { 
+  //         setCurrentUser(user.data); 
+  //       }) 
+  //       .catch((err) => { 
+  //         console.log(`Ошибка в App, getDataUser: ${err.status}`); 
+  //       }); 
+  //   } 
+  // }, [loggedIn]); 
  
-  // получение карточки 
-  useEffect(() => { 
-    if (loggedIn) { 
-      api 
-        .getInitialCards() 
-        .then((data) => { 
-          setCards(data.reverse()); 
-        }) 
-        .catch((err) => { 
-          console.log(`Ошибка в App, getInitialCards: ${err.status}`); 
-        }); 
-    } 
-  }, [loggedIn]);
+  // // получение карточки 
+  // useEffect(() => { 
+  //   if (loggedIn) { 
+  //     api 
+  //       .getInitialCards() 
+  //       .then((data) => { 
+  //         setCards(data.reverse()); 
+  //       }) 
+  //       .catch((err) => { 
+  //         console.log(`Ошибка в App, getInitialCards: ${err.status}`); 
+  //       }); 
+  //   } 
+  // }, [loggedIn]);
 
   
   
