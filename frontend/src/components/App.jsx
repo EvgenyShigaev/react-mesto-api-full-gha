@@ -71,25 +71,29 @@ function App() {
   }, [loggedIn]);
 
   
-  useEffect(() => { 
+   
     function checkToken() { 
       const token = localStorage.getItem("token"); 
       if (token) { 
         auth 
           .checkToken(token) 
-          .then((user) => { 
-            if (user) { 
+          .then((res) => { 
+            if (res) { 
               setLoggedIn(true); 
-              setEmail(user.data.email); 
+              setEmail(res.data.email); 
               navigate("/", { replace: true }); 
             } 
           }) 
-          .catch((err) => console.log(err)); 
+          .catch((err) => { 
+            console.log(`Ошибка в checkToken, в App: ${err.status}`); 
+          }); 
       } 
     } 
- 
-    checkToken(); 
-  }, [navigate]); 
+   
+    useEffect(() => { 
+      checkToken(); 
+      // eslint-disable-next-line react-hooks/exhaustive-deps 
+    }, []);
  
   // регистрация 
   function handleRegister({ email, password }) { 
