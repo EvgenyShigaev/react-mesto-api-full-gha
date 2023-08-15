@@ -70,30 +70,43 @@ function App() {
     } 
   }, [loggedIn]);
 
-  
-   
-    function checkToken() { 
-      const token = localStorage.getItem("token"); 
-      if (token) { 
-        auth 
-          .checkToken(token) 
-          .then((res) => { 
-            if (res) { 
-              setLoggedIn(true); 
-              setEmail(res.data.email); 
-              navigate("/", { replace: true }); 
-            } 
-          }) 
-          .catch((err) => { 
-            console.log(`Ошибка в checkToken, в App: ${err.status}`); 
-          }); 
-      } 
+  function checkToken() { 
+    const token = localStorage.getItem("token"); 
+    if (token) { 
+      auth 
+        .checkToken(token) 
+        .then((user) => { 
+          if (user) { 
+            setLoggedIn(true); 
+            setEmail(user.data.email); 
+            navigate("/", { replace: true }); 
+          } 
+        }) 
+        .catch((err) => console.log(err)); 
     } 
-   
-    useEffect(() => { 
-      checkToken(); 
-      // eslint-disable-next-line react-hooks/exhaustive-deps 
-    }, []);
+  } 
+
+  checkToken();
+  
+  // useEffect(() => { 
+  //   function checkToken() { 
+  //     const token = localStorage.getItem("token"); 
+  //     if (token) { 
+  //       auth 
+  //         .checkToken(token) 
+  //         .then((user) => { 
+  //           if (user) { 
+  //             setLoggedIn(true); 
+  //             setEmail(user.data.email); 
+  //             navigate("/", { replace: true }); 
+  //           } 
+  //         }) 
+  //         .catch((err) => console.log(err)); 
+  //     } 
+  //   } 
+ 
+  //   checkToken(); 
+  // }, [navigate]); 
  
   // регистрация 
   function handleRegister({ email, password }) { 
