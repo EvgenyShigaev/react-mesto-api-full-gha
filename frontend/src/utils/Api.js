@@ -22,8 +22,8 @@ class Api {
 // ----
   getInitialCards() {
     return fetch(`${this._url}/cards`, {
-      method: "GET",
-      headers: this._setHeaders(),
+      // method: "GET",
+      headers: this._headers,
     }).then(this._getJson);
   }
 
