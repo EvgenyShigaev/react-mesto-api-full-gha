@@ -48,8 +48,8 @@ function App() {
     if (loggedIn) { 
       api 
         .getDataUser() 
-        .then((res) => { 
-          setCurrentUser(res.data); 
+        .then((user) => { 
+          setCurrentUser(user.data); 
         }) 
         .catch((err) => { 
           console.log(`Ошибка в App, getDataUser: ${err.status}`); 
