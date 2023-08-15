@@ -74,10 +74,10 @@ function App() {
   
   
     function checkToken() { 
-      const jwt = localStorage.getItem("token"); 
-      if (jwt) { 
+      const token = localStorage.getItem("token"); 
+      if (token) { 
         auth 
-          .checkToken(jwt) 
+          .checkToken(token) 
           .then((user) => { 
             if (user) { 
               setLoggedIn(true); 
@@ -93,7 +93,7 @@ function App() {
       checkToken();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    
+
  
   // регистрация 
   function handleRegister({ email, password }) { 
