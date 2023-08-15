@@ -33,47 +33,12 @@ function App() {
   const [email, setEmail] = useState(""); 
   const navigate = useNavigate(); 
  
-  // useEffect(() => { 
-  //   Promise.all([api.getInitialCards(), api.getUserData()]) 
-  //     .then(([initialCards, user]) => { 
-  //       setCards(initialCards); 
-  //       setCurrentUser(user); 
-  //     }) 
-  //     .catch((err) => alert(err)); 
-  // }, []);
-
-
-
   useEffect(() => { 
-    if (loggedIn) { 
-      api.getDataUser() 
-        .then((res) => { 
-          setCurrentUser(res.data); 
-        }) 
-        .catch((err) => { 
-          console.log(`Ошибка в App, getDataUser: ${err.status}`); 
-        }); 
-    } 
-  }, [loggedIn]); 
- 
-  // получение карточки 
-  useEffect(() => { 
-    if (loggedIn) { 
-      api.getInitialCards() 
-        .then((data) => { 
-          setCards(data.reverse()); 
-        }) 
-        .catch((err) => { 
-          console.log(`Ошибка в App, getInitialCards: ${err.status}`); 
-        }); 
-    } 
-  }, [loggedIn]);
-  
     function checkToken() { 
-      const token = localStorage.getItem("token"); 
-      if (token) { 
+      const jwt = localStorage.getItem("token"); 
+      if (jwt) { 
         auth 
-          .checkToken(token) 
+          .checkToken(jwt) 
           .then((user) => { 
             if (user) { 
               setLoggedIn(true); 
@@ -85,11 +50,8 @@ function App() {
       } 
     } 
  
-    useEffect(() => { 
-      checkToken();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
+    checkToken(); 
+  }, [navigate]); 
  
   // регистрация 
   function handleRegister({ email, password }) { 
@@ -130,7 +92,16 @@ function App() {
     localStorage.removeItem("token"); 
     navigate("/sign-in"); 
   } 
-  
+ 
+  useEffect(() => { 
+    Promise.all([api.getInitialCards(), api.getUserData()]) 
+      .then(([initialCards, user]) => { 
+        setCards(initialCards); 
+        setCurrentUser(user); 
+      }) 
+      .catch((err) => alert(err)); 
+  }, []); 
+ 
   function handleEditProfileClick() { 
     setIsEditProfilePopupOpen(true); 
   } 
