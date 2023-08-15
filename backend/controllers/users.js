@@ -84,7 +84,7 @@ const currentUser = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError('Пользователь не найден');
     })
-    .then((user) => res.status(200).send(user))
+    .then((user) => res.status(200).send({ data: user }))
 
     .catch((err) => {
       if (err.name === 'CastError') {
