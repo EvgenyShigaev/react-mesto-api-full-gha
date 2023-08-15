@@ -73,10 +73,10 @@ function App() {
   
   useEffect(() => { 
     function checkToken() { 
-      const jwt = localStorage.getItem("token"); 
-      if (jwt) { 
+      const token = localStorage.getItem("token"); 
+      if (token) { 
         auth 
-          .checkToken(jwt) 
+          .checkToken(token) 
           .then((user) => { 
             if (user) { 
               setLoggedIn(true); 
