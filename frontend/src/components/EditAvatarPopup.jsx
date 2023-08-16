@@ -5,7 +5,7 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
   const avatarRef = useRef();
 
   useEffect(() => {
-    avatarRef.current.value = ""
+    avatarRef.current.value = "";
   }, [isOpen]);
 
   function handleSubmit(e) {

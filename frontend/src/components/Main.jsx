@@ -59,7 +59,6 @@ export default function Main({
               onCardDeleteConfirm={onCardDeleteConfirm}
             />
           ))}
-          ;
         </ul>
       </section>
     </main>
