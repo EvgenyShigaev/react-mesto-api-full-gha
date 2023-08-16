@@ -68,9 +68,9 @@ const login = (req, res, next) => {
 const getUsers = (req, res, next) => {
   User
     .find({})
-    .orFail(() => {
-      throw new NotFoundError('Пользователь не найден');
-    })
+    // .orFail(() => {
+    //   throw new NotFoundError('Пользователь не найден');
+    // })
     .then((users) => res.status(200).send(users))
     .catch((err) => {
       next(err);

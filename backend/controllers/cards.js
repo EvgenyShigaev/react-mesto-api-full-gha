@@ -9,7 +9,7 @@ const Forbidden = require('../errors/Forbidden');
 // getCards - для получения всех карточек
 const getCards = (req, res, next) => {
   Card.find({})
-    .populate(['owner', 'likes'])
+    // .populate(['owner', 'likes'])
     .then((card) => res.status(200).send(card))
     .catch((err) => {
       next(err);
@@ -104,7 +104,7 @@ const dislikeCard = (req, res, next) => {
 
     .then((card) => res.status(200).send(card))
     .catch((err) => {
-      if (err.name === 'CastError' || err.name === 'BadRequest') {
+      if (err.name === 'CastError') {
         next(new BadRequest('Некорректный запрос'));
         return;
       }
