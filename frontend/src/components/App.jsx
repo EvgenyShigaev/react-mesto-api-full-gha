@@ -34,64 +34,63 @@ function App() {
   const navigate = useNavigate();
 
   // пользователь, карточки, токен, логин и рег
- useEffect(() => {
-  if (loggedIn) {
-    api.getUserData()
-    .then((res) => {
-      setCurrentUser(res.data);
-    })
-    .catch((err) => { 
-      console.log(`Ошибка: ${err.status}`); 
-    }); 
-} 
-}, [loggedIn]);
-
-useEffect(() => {
+  useEffect(() => {
     if (loggedIn) {
-      api.getInitialCards()
-      .then((data) => {
-        setCards(data.reverse());
-      })
-      .catch((err) => { 
-        console.log(`Ошибка: ${err.status}`); 
-      }); 
-  } 
-}, [loggedIn]);
-
-
-
-    function checkToken() {
-      const token = localStorage.getItem("token");
-      if (token) {
-        auth
-          .checkToken(token)
-          .then((res) => {
-            if (res.data) {
-              setLoggedIn(true);
-              setEmail(res.data.email);
-              navigate("/", { replace: true });
-            }
-          })
-          .catch((err) => { 
-            console.log(`Ошибка: ${err.status}`); 
-          }); 
-      } 
+      api
+        .getUserData()
+        .then((res) => {
+          setCurrentUser(res.data);
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err.status}`);
+        });
     }
+  }, [loggedIn]);
 
-    useEffect(() => { 
-      checkToken();
+  useEffect(() => {
+    if (loggedIn) {
+      api
+        .getInitialCards()
+        .then((data) => {
+          setCards(data.reverse());
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err.status}`);
+        });
+    }
+  }, [loggedIn]);
+
+  function checkToken() {
+    const token = localStorage.getItem("token");
+    if (token) {
+      auth
+        .checkToken(token)
+        .then((res) => {
+          if (res.data) {
+            setLoggedIn(true);
+            setEmail(res.data.email);
+            navigate("/", { replace: true });
+          }
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err.status}`);
+        });
+    }
+  }
+
+  useEffect(() => {
+    checkToken();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-// ------------------------
+  }, []);
+
   // регистрация
   function handleRegister({ email, password }) {
     auth
       .register(email, password)
       .then((res) => {
         console.log(res);
-          setIsSuccess(true);
-          navigate("/sign-in", { replace: true });
-        
+        setIsSuccess(true);
+        navigate("/sign-in", { replace: true });
       })
       .catch((err) => {
         setIsSuccess(false);
@@ -105,16 +104,16 @@ useEffect(() => {
       .login(email, password)
       .then((data) => {
         if (data.token) {
-          console.log(data)
+          console.log(data);
           setEmail(email);
           localStorage.setItem("token", data.token);
           setLoggedIn(true);
-          
+
           navigate("/", { replace: true });
         }
       })
       .catch((err) => {
-        setIsSuccess(false)
+        setIsSuccess(false);
         setIsInfoTooltip(true);
         console.log(`Ошибка: ${err}`);
       });
@@ -126,17 +125,6 @@ useEffect(() => {
     setEmail("");
     navigate("/sign-in", { replace: true });
   }
-
-
-
-  // useEffect(() => {
-  //   Promise.all([api.getInitialCards(), api.getUserData()])
-  //     .then(([initialCards, user]) => {
-  //       setCards(initialCards);
-  //       setCurrentUser(user);
-  //     })
-  //     .catch((err) => alert(err));
-  // }, []);
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);

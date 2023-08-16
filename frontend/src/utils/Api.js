@@ -19,15 +19,13 @@ class Api {
       ...this._headers, 
     }; 
   } 
-// ----
+  
  getUserData() {
     return fetch(`${this._url}/users/me`, {
       headers: this._setHeaders(),
     }).then(this._getJson);
   }
 
-
-  
   getInitialCards() {
     return fetch(`${this._url}/cards`, {
       // method: "GET",
@@ -35,8 +33,6 @@ class Api {
     }).then(this._getJson);
   }
 
- 
-// ---
   editUserInfo(data) {
     return fetch(`${this._url}/users/me`, {
       method: "PATCH",
