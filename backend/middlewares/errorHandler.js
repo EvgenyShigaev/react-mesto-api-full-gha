@@ -1,4 +1,4 @@
-const internalServerError = (err, req, res, next) => {
+const errorHandler = (err, req, res, next) => {
   // если у ошибки нет статуса, выставляем 500
   const { statusCode = 500, message } = err;
 
@@ -11,4 +11,4 @@ const internalServerError = (err, req, res, next) => {
   next();
 };
 
-module.exports = internalServerError;
+module.exports = errorHandler;

@@ -9,7 +9,6 @@ const Forbidden = require('../errors/Forbidden');
 // getCards - для получения всех карточек
 const getCards = (req, res, next) => {
   Card.find({})
-    // .populate(['owner', 'likes'])
     .then((card) => res.status(200).send(card))
     .catch((err) => {
       next(err);

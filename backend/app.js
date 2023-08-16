@@ -8,7 +8,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const router = require('./routes');
 const cors = require('./middlewares/cors');
 const limiter = require('./middlewares/rateLimit');
-const error500 = require('./middlewares/error500');
+const errorHandler = require('./middlewares/errorHandler');
 
 const { PORT = 3000 } = process.env;
 mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
@@ -31,7 +31,7 @@ app.use(router);
 app.use(errorLogger);
 
 app.use(errors());
-app.use(error500);
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
