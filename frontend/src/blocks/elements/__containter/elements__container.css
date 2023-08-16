@@ -1,6 +1,7 @@
 .elements__container {
   display: grid;
-  grid-template-columns: repeat(4, minmax(282px, 1fr));
+  grid-template-columns: repeat(auto-fit, 282px);
+  /* grid-template-columns: repeat(auto-fit, minmax(282px, 1fr)); */
   max-width: 880px;
   gap: 20px 17px;
   margin: 51px auto 0;
