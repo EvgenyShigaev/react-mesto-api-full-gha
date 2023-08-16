@@ -44,5 +44,5 @@ export default function Card({ card, onCardClick, onCardLike, onCardDelete }) {
         </div>
       </li>
     </CurrentUserContext.Provider>
-  )
+  );
 }
